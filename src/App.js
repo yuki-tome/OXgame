@@ -21,7 +21,6 @@ function Board({ xIsNext, squares, onPlay }) {
     } else {
       nextSquares[i] = "O";
     }
-    console.log(i);
     onPlay(nextSquares,i);
   }
 
@@ -102,10 +101,11 @@ export default function Game() {
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
   const [mass, setMass] = useState([]);
-  const [on, setOn] = useState(false);
+  const [reverse, setReverse] = useState(false);
   let col = new Array();
   let row = new Array();
   let description = new Array(9);
+  let order;
 
   function handlePlay(nextSquares,i) {
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
@@ -144,6 +144,11 @@ export default function Game() {
     }
   }
 
+  function onButtonClick(){
+    setReverse(!reverse);
+  }
+
+
   const moves = history.map((squares, move) => {
     /* let description = new Array(9); */
     onPlaceMass(move);
@@ -152,21 +157,27 @@ export default function Game() {
     } else {
       description[move] = "Go to game start";
     }
-    /* return (
-      <li key={move}>
-        <button className="button" onClick={() => jumpTo(move)}>{description[move]}</button>
-      </li> 
-    ); */
   });
-
+  
+  const reversedArr = [...history].reverse();
   const descriptions = history.map((squares, move) => {
-    return (
-      <li key={move}>
-        <button className="button" onClick={() => jumpTo(move)}>{description[move]}</button>
-      </li>
-    );
+    if (move === 0){
+      return(
+        <ul key={0}>
+          <button className="button" onClick={() => jumpTo(0)}>{description[0]}</button>
+        </ul>
+      );
+    }
+    else {
+      move = reverse ? history.length-move : move;
+      return (
+        <li key={history.length-move}>
+          <button className="button" onClick={() => jumpTo(history.length-move)}>{description[move]}</button>
+        </li>
+      );
+    }
   });
-
+  
 
   return (
     <div className="game">
