@@ -21,6 +21,7 @@ function Board({ xIsNext, squares, onPlay }) {
     } else {
       nextSquares[i] = "O";
     }
+    console.log(i);
     onPlay(nextSquares,i);
   }
 
@@ -104,6 +105,7 @@ export default function Game() {
   const [on, setOn] = useState(false);
   let col = new Array();
   let row = new Array();
+  let description = new Array(9);
 
   function handlePlay(nextSquares,i) {
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
@@ -111,19 +113,16 @@ export default function Game() {
     /* console.log(currentMove+1) */
     setCurrentMove(nextHistory.length - 1);
 
-    const newMass = [...mass, i+1];
+    const newMass = [...mass, i];
     setMass(newMass);
   }
 
-  function jumpTo(nextMove) {
-    setCurrentMove(nextMove);
+  function jumpTo(move) {
     //着手履歴に移動した際にマスの記憶も合わせる
-    const changeMass = [...mass.slice(0, nextMove-1)];
-    console.log(mass[nextMove-1]);
-    console.log(nextMove-1);
+    const changeMass = [...mass.slice(0, move)];
     setMass(changeMass);
     //移動した際にdescriptionの内容も修正
-    const nextHistory = [...history.slice(0, nextMove)];
+    const nextHistory = [...history.slice(0, move+1)];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
   }
@@ -132,32 +131,42 @@ export default function Game() {
     console.log(description[2])
   }
 
-  const moves = history.map((squares, move) => {
-    let description = new Array(9);
-    row[move-1] = mass[move-1] %3
-    row[move-1] = (row[move-1] === 0) ? 3 : row[move-1]
+  function onPlaceMass(move){
+    row[move-1] = mass[move-1] %3+1
   
-    if (mass[move-1] <= 3) {
+    if (mass[move-1] < 3) {
       col[move-1] = 1
     }
-    else if (mass[move-1] <= 6) {
+    else if (mass[move-1] < 6) {
       col[move-1] = 2
     }else {
       col[move-1] = 3
     }
+  }
 
+  const moves = history.map((squares, move) => {
+    /* let description = new Array(9); */
+    onPlaceMass(move);
     if (move > 0) {
       description[move] = "Go to move #" + move + ' col:' + col[move-1] + ' row:' + row[move-1];
     } else {
       description[move] = "Go to game start";
     }
-    console.log(description[move])
+    /* return (
+      <li key={move}>
+        <button className="button" onClick={() => jumpTo(move)}>{description[move]}</button>
+      </li> 
+    ); */
+  });
+
+  const descriptions = history.map((squares, move) => {
     return (
       <li key={move}>
         <button className="button" onClick={() => jumpTo(move)}>{description[move]}</button>
       </li>
     );
   });
+
 
   return (
     <div className="game">
@@ -166,7 +175,7 @@ export default function Game() {
       </div>
       <div className="game-info">
         <button className="order" onClick={() => onButtonClick()}>order</button>
-        <ol>{moves}</ol>
+        <ol>{descriptions}</ol>
       </div>
     </div>
   );
