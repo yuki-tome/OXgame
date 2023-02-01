@@ -2,9 +2,13 @@ import { useState } from "react";
 import "./styles.css";
 
 
-function Square({ value, onSquareClick }) {
+function Square({ winner, number, value, onSquareClick }) {
+  let winmass=0;
+  if( number===winner[0] || number===winner[1] || number===winner[2]){
+    winmass = 1;
+  }
   return (
-    <button className="square" onClick={onSquareClick}>
+    <button className={winmass ? "winsquare" : "square"} onClick={onSquareClick}>
       {value}
     </button>
   );
@@ -24,11 +28,12 @@ function Board({ xIsNext, squares, onPlay, history}) {
     onPlay(nextSquares,i);
   }
 
-
   const winner = calculateWinner(squares);
+  let winnumber = new Array();
   let status;
   if (winner) {
-    status = "Winner: " + winner;
+    status = "Winner: " + winner[0];
+    winnumber = winner[1];
   } else if (history.length > 9) {
     status = "Draw";
   } else {
@@ -46,7 +51,7 @@ function Board({ xIsNext, squares, onPlay, history}) {
               {
                Array(3).fill(0).map((val2, j) => {
                 return(
-                  <Square value={squares[ (3*i)+j ]} onSquareClick={() => handleClick( (3*i)+j )} />
+                  <Square winner={winnumber} number={(3*i)+j} value={squares[ (3*i)+j ]} onSquareClick={() => handleClick( (3*i)+j )} />
                   );
                 })
               }
@@ -73,7 +78,7 @@ function calculateWinner(squares) {
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
+      return [squares[a], lines[i]];
     }
   }
   return null;
@@ -89,7 +94,6 @@ export default function Game() {
   let col = new Array();
   let row = new Array();
   let description = new Array(9);
-  let order;
 
   function handlePlay(nextSquares,i) {
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
