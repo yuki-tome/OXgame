@@ -117,9 +117,15 @@ export default function Game() {
 
   function jumpTo(nextMove) {
     setCurrentMove(nextMove);
-
-    const newMass = [...mass.slice(0, nextMove)];
-    setMass(newMass);
+    //着手履歴に移動した際にマスの記憶も合わせる
+    const changeMass = [...mass.slice(0, nextMove-1)];
+    console.log(mass[nextMove-1]);
+    console.log(nextMove-1);
+    setMass(changeMass);
+    //移動した際にdescriptionの内容も修正
+    const nextHistory = [...history.slice(0, nextMove)];
+    setHistory(nextHistory);
+    setCurrentMove(nextHistory.length - 1);
   }
 
   function onButtonClick(){
