@@ -10,7 +10,7 @@ function Square({ value, onSquareClick }) {
   );
 }
 
-function Board({ xIsNext, squares, onPlay }) {
+function Board({ xIsNext, squares, onPlay, history}) {
   function handleClick(i) {
     if (calculateWinner(squares) || squares[i]) {
       return;
@@ -25,28 +25,12 @@ function Board({ xIsNext, squares, onPlay }) {
   }
 
 
-
-
-  /* function ToggleButton (on){
-    function clickHandler() {
-      this.setState({
-        on: !on
-      });
-    }
-    let className = this.state.on ? "switch on" : "switch";
-    return (
-        <div className={className} onClick={clickHandler}></div>
-    );
-  } */
-
-
-
-
-
   const winner = calculateWinner(squares);
   let status;
   if (winner) {
     status = "Winner: " + winner;
+  } else if (history.length > 9) {
+    status = "Draw";
   } else {
     status = "Next player: " + (xIsNext ? "X" : "O");
   }
@@ -127,10 +111,6 @@ export default function Game() {
     setCurrentMove(nextHistory.length - 1);
   }
 
-  function onButtonClick(){
-    console.log(description[2])
-  }
-
   function onPlaceMass(move){
     row[move-1] = mass[move-1] %3+1
   
@@ -171,8 +151,8 @@ export default function Game() {
     else {
       move = reverse ? history.length-move : move;
       return (
-        <li key={history.length-move}>
-          <button className="button" onClick={() => jumpTo(history.length-move)}>{description[move]}</button>
+        <li key={move}>
+          <button className="button" onClick={() => jumpTo(move)}>{description[move]}</button>
         </li>
       );
     }
@@ -182,7 +162,7 @@ export default function Game() {
   return (
     <div className="game">
       <div className="game-board">
-        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
+        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} history={history}/>
       </div>
       <div className="game-info">
         <button className="order" onClick={() => onButtonClick()}>order</button>
