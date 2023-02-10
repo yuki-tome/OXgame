@@ -42,22 +42,23 @@ function Board({ xIsNext, squares, onPlay, history}) {
 
   return (
     <>
-      <div className="status">{status}
-      {
-        [0, 1, 2].map((i) => {
-          return (
-            <div className="board-row">
-              {
-               [0, 1, 2].map((j) => {
-                return(
-                  <Square winner={winnumber} number={(3*i)+j} value={squares[ (3*i)+j ]} onSquareClick={() => handleClick( (3*i)+j )} />
-                  );
-                })
-              }
-            </div>
-          );
-        })
-      }
+      <div>
+        <div className="status">{status}</div>
+        {
+          [0, 1, 2].map((i) => {
+            return (
+              <div className="board-row">
+                {
+                [0, 1, 2].map((j) => {
+                  return(
+                    <Square winner={winnumber} number={(3*i)+j} value={squares[ (3*i)+j ]} onSquareClick={() => handleClick( (3*i)+j )} />
+                    );
+                  })
+                }
+              </div>
+            );
+          })
+        }
       </div>
     </>
   );

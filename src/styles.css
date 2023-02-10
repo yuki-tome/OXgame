@@ -52,38 +52,38 @@ ul {
 
 body {
   font-family: sans-serif;
-  margin: 20px;
+  margin: 1vw;
   padding: 0;
 }
 
 .square {
   background: #fff;
-  border: 1px solid #999;
+  border: 1vw solid #999;
   float: left;
-  font-size: 24px;
+  font-size: 24vw;
   font-weight: bold;
-  line-height: 34px;
-  height: 34px;
-  margin-right: -1px;
-  margin-top: -1px;
+  line-height: 10vw;
+  height: 20vw;
+  margin-right: -1vw;
+  margin-top: -1vw;
   padding: 0;
   text-align: center;
-  width: 34px;
+  width: 20vw;
 }
 
 .winsquare{
   background: #b8b7b5;
-  border: 1px solid black;
+  border: 1vw solid black;
   float: left;
-  font-size: 24px;
+  font-size: 24vw;
   font-weight: bold;
-  line-height: 34px;
-  height: 34px;
-  margin-right: -1px;
-  margin-top: -1px;
+  line-height: 10vw;
+  height: 20vw;
+  margin-right: -1vw;
+  margin-top: -1vw;
   padding: 0;
   text-align: center;
-  width: 34px;
+  width: 20vw;
 }
 
 .board-row:after {
@@ -93,7 +93,8 @@ body {
 }
 
 .status {
-  margin-bottom: 10px;
+  margin-bottom: 3vw;
+  font-size: 2vw;
 }
 .game {
   display: flex;
@@ -101,15 +102,21 @@ body {
 }
 
 .game-info {
-  margin-left: 20px;
+  margin-left: 2vw;
 }
 
 .button {
   border: 2px solid transparent;
   background: #dcdcdc;
+  height: 5vw;
+  font-size: 2vw;
+  margin-bottom: 1vw;
 }
 .button:hover{
   border: 2px solid #696969;
   background: #dcdcdc;
   color: #333;
+}
+.order {
+  font-size: 2vw;
 }
