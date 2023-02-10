@@ -58,32 +58,32 @@ body {
 
 .square {
   background: #fff;
-  border: 1vw solid #999;
+  border: 0.5vw solid #999;
   float: left;
-  font-size: 24vw;
+  font-size: 12vw;
   font-weight: bold;
-  line-height: 10vw;
-  height: 20vw;
-  margin-right: -1vw;
-  margin-top: -1vw;
+  line-height: 5vw;
+  height: 10vw;
+  margin-right: -0.5vw;
+  margin-top: -0.5vw;
   padding: 0;
   text-align: center;
-  width: 20vw;
+  width: 10vw;
 }
 
 .winsquare{
   background: #b8b7b5;
-  border: 1vw solid black;
+  border: 0.5vw solid black;
   float: left;
-  font-size: 24vw;
+  font-size: 12vw;
   font-weight: bold;
-  line-height: 10vw;
-  height: 20vw;
-  margin-right: -1vw;
-  margin-top: -1vw;
+  line-height: 5vw;
+  height: 10vw;
+  margin-right: -0.5vw;
+  margin-top: -0.5vw;
   padding: 0;
   text-align: center;
-  width: 20vw;
+  width: 10vw;
 }
 
 .board-row:after {
@@ -94,7 +94,7 @@ body {
 
 .status {
   margin-bottom: 3vw;
-  font-size: 2vw;
+  font-size: 5vw;
 }
 .game {
   display: flex;
@@ -109,7 +109,7 @@ body {
   border: 2px solid transparent;
   background: #dcdcdc;
   height: 5vw;
-  font-size: 2vw;
+  font-size: 3vw;
   margin-bottom: 1vw;
 }
 .button:hover{
@@ -118,5 +118,5 @@ body {
   color: #333;
 }
 .order {
-  font-size: 2vw;
+  font-size: 3vw;
 }
