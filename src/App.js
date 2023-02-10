@@ -39,17 +39,16 @@ function Board({ xIsNext, squares, onPlay, history}) {
   } else {
     status = "Next player: " + (xIsNext ? "X" : "O");
   }
-  let cnt = 0;
 
   return (
     <>
       <div className="status">{status}
       {
-        Array(3).fill(0).map((val, i) => {
+        [0, 1, 2].map((i) => {
           return (
             <div className="board-row">
               {
-               Array(3).fill(0).map((val2, j) => {
+               [0, 1, 2].map((j) => {
                 return(
                   <Square winner={winnumber} number={(3*i)+j} value={squares[ (3*i)+j ]} onSquareClick={() => handleClick( (3*i)+j )} />
                   );
@@ -98,7 +97,6 @@ export default function Game() {
   function handlePlay(nextSquares,i) {
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory);
-    /* console.log(currentMove+1) */
     setCurrentMove(nextHistory.length - 1);
 
     const newMass = [...mass, i];
@@ -143,7 +141,6 @@ export default function Game() {
     }
   });
   
-  const reversedArr = [...history].reverse();
   const descriptions = history.map((squares, move) => {
     if (move === 0){
       return(
