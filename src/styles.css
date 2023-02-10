@@ -106,17 +106,23 @@ body {
 }
 
 .button {
-  border: 2px solid transparent;
+  border: 0.3vw solid transparent;
   background: #dcdcdc;
   height: 5vw;
   font-size: 3vw;
   margin-bottom: 1vw;
 }
 .button:hover{
-  border: 2px solid #696969;
+  border: 0.3vw solid #696969;
   background: #dcdcdc;
   color: #333;
 }
 .order {
+  border: 0.3vw solid transparent;
   font-size: 3vw;
+}
+.order:hover{
+  border: 0.3vw solid #696969;
+  background: #dcdcdc;
+  color: #333;
 }
