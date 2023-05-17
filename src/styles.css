@@ -71,7 +71,7 @@ body {
   width: 10vw;
 }
 
-.winsquare{
+.winsquare {
   background: #b8b7b5;
   border: 0.5vw solid black;
   float: left;
@@ -88,10 +88,13 @@ body {
 
 .board-row:after {
   clear: both;
-  content: '';
+  content: "";
   display: table;
 }
 
+.statusmass {
+  width: 40vw;
+}
 .status {
   margin-bottom: 3vw;
   font-size: 5vw;
@@ -112,7 +115,7 @@ body {
   font-size: 3vw;
   margin-bottom: 1vw;
 }
-.button:hover{
+.button:hover {
   border: 0.3vw solid #696969;
   background: #dcdcdc;
   color: #333;
@@ -121,7 +124,9 @@ body {
   border: 0.3vw solid transparent;
   font-size: 3vw;
 }
-.order:hover{
+.discription {
+}
+.order:hover {
   border: 0.3vw solid #696969;
   background: #dcdcdc;
   color: #333;

@@ -1,31 +1,35 @@
 import { useState } from "react";
 import "./styles.css";
 
-
 function Square({ winner, number, value, onSquareClick }) {
-  let winmass=0;
-  if( number===winner[0] || number===winner[1] || number===winner[2]){
+  //ビンゴしたマスを調べる
+  let winmass = 0;
+  if (number === winner[0] || number === winner[1] || number === winner[2]) {
     winmass = 1;
   }
   return (
-    <button className={winmass ? "winsquare" : "square"} onClick={onSquareClick}>
+    <button
+      className={winmass ? "winsquare" : "square"}
+      onClick={onSquareClick}
+    >
       {value}
     </button>
   );
 }
 
-function Board({ xIsNext, squares, onPlay, history}) {
+function Board({ xIsNext, squares, onPlay, history }) {
   function handleClick(i) {
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
     const nextSquares = squares.slice();
+    //次のプレイヤーの判定,xIsNextがTrueの時"X"がplayerになる
     if (xIsNext) {
       nextSquares[i] = "X";
     } else {
       nextSquares[i] = "O";
     }
-    onPlay(nextSquares,i);
+    onPlay(nextSquares, i);
   }
 
   const winner = calculateWinner(squares);
@@ -42,29 +46,31 @@ function Board({ xIsNext, squares, onPlay, history}) {
 
   return (
     <>
-      <div>
+      <div className="statusmass">
         <div className="status">{status}</div>
-        {
-          [0, 1, 2].map((i) => {
-            return (
-              <div className="board-row">
-                {
-                [0, 1, 2].map((j) => {
-                  return(
-                    <Square winner={winnumber} number={(3*i)+j} value={squares[ (3*i)+j ]} onSquareClick={() => handleClick( (3*i)+j )} />
-                    );
-                  })
-                }
-              </div>
-            );
-          })
-        }
+        {[0, 1, 2].map((i) => {
+          return (
+            <div className="board-row">
+              {[0, 1, 2].map((j) => {
+                return (
+                  <Square
+                    winner={winnumber}
+                    number={3 * i + j}
+                    value={squares[3 * i + j]}
+                    onSquareClick={() => handleClick(3 * i + j)}
+                  />
+                );
+              })}
+            </div>
+          );
+        })}
       </div>
     </>
   );
 }
 
 function calculateWinner(squares) {
+  //ビンゴの並びの一覧
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
@@ -73,8 +79,9 @@ function calculateWinner(squares) {
     [1, 4, 7],
     [2, 5, 8],
     [0, 4, 8],
-    [2, 4, 6]
+    [2, 4, 6],
   ];
+  //ビンゴの並びがあるのか探索
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
@@ -95,7 +102,7 @@ export default function Game() {
   let row = new Array();
   let description = new Array(9);
 
-  function handlePlay(nextSquares,i) {
+  function handlePlay(nextSquares, i) {
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
@@ -109,65 +116,79 @@ export default function Game() {
     const changeMass = [...mass.slice(0, move)];
     setMass(changeMass);
     //移動した際にdescriptionの内容も修正
-    const nextHistory = [...history.slice(0, move+1)];
+    const nextHistory = [...history.slice(0, move + 1)];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
   }
 
-  function onPlaceMass(move){
-    row[move-1] = mass[move-1] %3+1
-  
-    if (mass[move-1] < 3) {
-      col[move-1] = 1
-    }
-    else if (mass[move-1] < 6) {
-      col[move-1] = 2
-    }else {
-      col[move-1] = 3
+  function onPlaceMass(move) {
+    row[move - 1] = (mass[move - 1] % 3) + 1;
+
+    if (mass[move - 1] < 3) {
+      col[move - 1] = 1;
+    } else if (mass[move - 1] < 6) {
+      col[move - 1] = 2;
+    } else {
+      col[move - 1] = 3;
     }
   }
 
-  function onButtonClick(){
+  //逆順にセットする
+  function onButtonClick() {
     setReverse(!reverse);
   }
-
 
   const moves = history.map((squares, move) => {
     /* let description = new Array(9); */
     onPlaceMass(move);
     if (move > 0) {
-      description[move] = "Go to move #" + move + ' col:' + col[move-1] + ' row:' + row[move-1];
+      description[move] =
+        "Go to move #" +
+        move +
+        " col:" +
+        col[move - 1] +
+        " row:" +
+        row[move - 1];
     } else {
       description[move] = "Go to game start";
     }
   });
-  
+
   const descriptions = history.map((squares, move) => {
-    if (move === 0){
-      return(
+    if (move === 0) {
+      return (
         <ul key={0}>
-          <button className="button" onClick={() => jumpTo(0)}>{description[0]}</button>
+          <button className="button" onClick={() => jumpTo(0)}>
+            {description[0]}
+          </button>
+        </ul>
+      );
+    } else {
+      move = reverse ? history.length - move : move;
+      return (
+        <ul key={move}>
+          <button className="button" onClick={() => jumpTo(move)}>
+            {description[move]}
+          </button>
         </ul>
       );
     }
-    else {
-      move = reverse ? history.length-move : move;
-      return (
-        <li key={move}>
-          <button className="button" onClick={() => jumpTo(move)}>{description[move]}</button>
-        </li>
-      );
-    }
   });
-  
 
   return (
     <div className="game">
       <div className="game-board">
-        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} history={history}/>
+        <Board
+          xIsNext={xIsNext}
+          squares={currentSquares}
+          onPlay={handlePlay}
+          history={history}
+        />
       </div>
       <div className="game-info">
-        <button className="order" onClick={() => onButtonClick()}>order</button>
+        <button className="order" onClick={() => onButtonClick()}>
+          order
+        </button>
         <ol>{descriptions}</ol>
       </div>
     </div>
